@@ -71,9 +71,9 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-#value={}
-#counter = Value('i', 0)
-#results=[]
+
+counter = Value('i', 0)
+results=[]
 #message={}
 #main route
 @app.route("/", methods=['GET', 'POST'])
@@ -95,7 +95,9 @@ def index():
         global video
         img=get_image(video)
         
-        faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")       
+        #for extracting face from the webcam image
+        faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")    
+        
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = faceCascade.detectMultiScale(
             gray,
@@ -149,14 +151,14 @@ def index():
     
         
     
-    return render_template('all.html')
+    return render_template('index.html')
 
 
 #route when result is shown
 @app.route('/result')
 def result():    
     res=session['result']
-    return render_template('index.html',val=res)
+    return render_template('result.html',val=res)
 
 def cv_get_im(src):
     print(src)
