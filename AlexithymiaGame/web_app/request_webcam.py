@@ -28,26 +28,26 @@ import json
 import time
 from PIL import Image
 import sys
-from siam_cosian import SiameseNetwork
+from model_training.siam_cosian import SiameseNetwork
 from multiprocessing import Value
 from flask_session import Session
 
 
-
+#app configuration
 app = Flask(__name__)
 video = cv2.VideoCapture(0)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-
-transform = transforms.Compose([
-                                #transforms.Resize(255),
+#image transformation for neural network
+transform = transforms.Compose([                                
                                 transforms.Grayscale(num_output_channels=1),
                                 transforms.Resize((48,48)),
                                 transforms.ToTensor(),
                                 transforms.Normalize((0.5081), (0.2552))])
 
+#function for video streaming from webcam
 def gen(video):
     while True:
         success, image = video.read()
@@ -57,6 +57,7 @@ def gen(video):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+#helping function for video streaming from webcam
 def get_image(video):
     while True:
         success, image = video.read()
@@ -70,10 +71,11 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-value={}
-counter = Value('i', 0)
-results=[]
-message={}
+#value={}
+#counter = Value('i', 0)
+#results=[]
+#message={}
+#main route
 @app.route("/", methods=['GET', 'POST'])
 def index():
     
@@ -150,7 +152,7 @@ def index():
     return render_template('all.html')
 
 
-
+#route when result is shown
 @app.route('/result')
 def result():    
     res=session['result']
@@ -161,6 +163,7 @@ def cv_get_im(src):
     img2 = cv2.imread(src, 0)
     return img2
 
+
 def hello():    
     message={}
     if request.method == 'POST':
@@ -169,7 +172,7 @@ def hello():
         message=request.get_json()        
         return message
 
-   
+#video streaming route
 @app.route('/video_feed')
 def video_feed():
     global video
