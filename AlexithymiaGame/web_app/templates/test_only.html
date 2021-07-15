@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Pls work</title>
+</head>
+<body>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+        $(document).ready(function () {
+            ImageSlider();
+        })
+        var i = 0;
+        function ImageSlider() {
+            //set the number of slider show
+
+            //image url
+            var imageSrc = "static/img/" + i + ".jpg";
+			
+			
+			fetchFlask(imageSrc);
+			
+            $("#image1").attr("src", imageSrc);
+			
+			
+			
+			
+            if (i > 7)
+                //i = 0;
+				return "end";
+            else
+                i++;
+            // setInterval("ImageSlider()", 3000);
+            setTimeout(ImageSlider, 5000);
+
+        };
+    </script>
+	<script>
+		
+		async function fetchFlask(src) {
+			fetch('/', {
+
+			// Declare what type of data we're sending
+			headers: {
+			  'Content-Type': 'application/json'
+			},
+
+			// Specify the method
+			method: 'POST',
+
+			// A JSON payload
+			body: JSON.stringify({
+				"src": src
+			})
+			});
+			
+			
+			<!-- .then(function (response) { // At this point, Flask has printed our JSON -->
+			<!-- return response.text(); -->
+			<!-- }).then(function (text) { -->
+
+			<!-- console.log('POST response: '); -->
+
+			<!-- // Should be 'OK' if everything was successful -->
+			<!-- console.log(text); -->
+			<!-- }); -->
+		};
+		
+		<!-- fetchFlask("/data/angry.jpg"); -->
+	</script>
+	<h3 class="mt-5">Alexithymia game</h3>
+				<div>
+					<img id="image1" src="" width="200wv" height="auto" alt="slideshow image"/>
+				</div>
+	<h1>{{ Text }}</h1>
+	<h1>{{ Text1 }}</h1>
+</body>
+</html>

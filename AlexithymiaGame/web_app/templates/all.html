@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Pls work</title>
+</head>
+<body>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+        $(document).ready(function () {
+            ImageSlider();
+        })
+        var i = 0;
+        function ImageSlider() {
+            //set the number of slider show
+
+            //image url
+            var imageSrc = "static/img/" + i + ".jpg";
+			
+			
+			fetchFlask(imageSrc);
+			
+            $("#image1").attr("src", imageSrc);	
+			
+            if (i > 7)
+			{
+			//i = 0;
+				
+				<!-- update_values(); -->
+				location.replace("http://localhost:2204/result");
+				return "end";
+			
+			}               
+            else
+                i++;
+           
+            setTimeout(ImageSlider, 5000);
+
+        };
+    </script>
+	<script>
+		
+		async function fetchFlask(src) {
+			fetch('/', {
+
+			// Declare what type of data we're sending
+			headers: {
+			  'Content-Type': 'application/json'
+			},
+
+			// Specify the method
+			method: 'POST',
+
+			// A JSON payload
+			body: JSON.stringify({
+				"src": src
+			})
+			});
+					
+			
+		};		
+		
+	</script>
+	<!-- <script> -->
+		<!-- async function update_values() { -->
+			<!-- fetch('/') -->
+		<!-- .then(function (response) { -->
+			<!-- return response.text(); -->
+		<!-- }).then(function (text) { -->
+			<!-- console.log('GET response text:'); -->
+			<!-- console.log(text); // Print the greeting as text -->
+		<!-- }); -->
+
+	<!-- // Send the same request -->
+	
+	<!-- }; -->
+	<!-- </script> -->
+		<!-- <div> -->
+			<!-- <img id="image1" src="" width="200wv" height="auto" alt="slideshow image"/> -->
+		<!-- </div> -->
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8  offset-lg-2">
+					<h3 class="mt-5">Alexithymia game</h3>
+					<div>
+						<img id="image1" src="" width="200wv" height="auto" alt="slideshow image"/>
+					</div>
+					<img src="{{ url_for('video_feed') }}" width="100%">
+					<!-- <p>{{Score}}</p> -->
+					<p id="val"></p>
+				</div>
+			</div>
+		</div>
+	
+</body>
+</html>
